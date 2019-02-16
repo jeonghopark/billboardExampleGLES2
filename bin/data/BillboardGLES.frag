@@ -1,4 +1,8 @@
+#ifdef GL_ES
+// define default precision for float, vec, mat.
 precision highp float;
+#endif
+
 
 uniform sampler2D src_tex_unit0;
 uniform float useTexture;
@@ -9,13 +13,15 @@ varying float depth;
 varying vec4 colorVarying;
 varying vec2 texCoordVarying;
 uniform sampler2D tex0;
-		
+        
 void main(){
-	vec4 c;
-	if(useColors>0.5){
-		c = colorVarying;
-	}else{
-		c = color;
-	}
-	gl_FragColor = texture2D(src_tex_unit0, gl_PointCoord)*c;	
+    vec4 c;
+    if(useColors > 0.5){
+        c = colorVarying;
+    }else{
+        c = color;
+    }
+    // gl_FragColor = texture2D(src_tex_unit0, gl_PointCoord) * c;   
+    gl_FragColor = texture2D(src_tex_unit0, gl_PointCoord) * colorVarying;   
+    // gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0); 
 }
